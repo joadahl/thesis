@@ -56,3 +56,4 @@ class disentanglement:
 
 data = dsprite()
 dis = disentanglement(data, 10)
+dis.train_vae(data)
