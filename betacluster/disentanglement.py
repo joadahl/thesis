@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 import math
 from callbackvae import callbackvae
 from callbackclass import callbackclass
+import os
+
 
 class disentanglement:
     def __init__(self, data, latent_dims):
@@ -18,6 +20,7 @@ class disentanglement:
         self.batch_size_vae = 64
         self.epochs_vae = math.ceil(data.x_train.shape[0] / self.batch_size_vae)
         self.batch_size_classifier = 10
+        self.path = os.path.dirname(__file__)
 
 
     def generate_z_diff(self, data, amount_n, L):
@@ -41,7 +44,7 @@ class disentanglement:
         history = self.vae.fit(data.x_train, data.x_train, validation_data=(data.x_test, data.x_test),
                                batch_size=self.batch_size_vae,
                                epochs=self.epochs_vae, verbose=0, callbacks=[callbackvae()])
-        self.vae.save_weights()
+        self.vae.save_weights(self.path)
 
     def train_classifier(self, data, amount_n, L):
         z_diff_train, z_diff_test, y_train, y_test = self.generate_z_diff(data, amount_n, L)
