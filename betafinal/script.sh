@@ -14,4 +14,4 @@ AT="@"
 #SBATCH --time=12:00:00
 
 
-python disentanglement.py
+python test.py
