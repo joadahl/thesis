@@ -69,13 +69,12 @@ class disentanglement:
             score = accuracy(y_test, reconstruction)
             beta_score_list.append(score.numpy())
         beta_score_list = np.array(beta_score_list)
-        #print(beta_score_list)
         tot_score = np.mean(beta_score_list[np.argsort(np.array(beta_score_list))[-5:]])
         with open('beta_score.csv', 'a') as f:
             f.write("beta_score:" + str(tot_score))
 
 
-
+print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 dis = disentanglement(10, 4)
 dis.train_vae()
-dis.beta_score(5000, 10)
+dis.beta_score(10, 10)
