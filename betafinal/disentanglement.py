@@ -22,7 +22,8 @@ class disentanglement:
                                                              epsilon=1e-08)
         self.batch_size_vae = 64
         self.epochs_vae = math.ceil(self.data.x_train.shape[0] / self.batch_size_vae)
-        self.path = os.path.dirname(__file__) #ta bort om kluster
+        self.path = os.path.dirname(__file__) #ta bort om kluster, verkar inte gå med os.path
+        self.path = "Midgard/home/joadahl/thesis/betafinal"
         #self.beta_score_classifier = beta_score_classifier()
         self.checkpoint_vae = tf.keras.callbacks.ModelCheckpoint(
         os.path.join(self.path + "/modelstore/", "vae" + str(self.latent_dims)),
