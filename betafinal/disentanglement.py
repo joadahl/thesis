@@ -41,7 +41,7 @@ class disentanglement:
         history = self.vae.fit(self.data.x_train, self.data.x_train, validation_data=(self.data.x_test, self.data.x_test),
                                batch_size=self.batch_size_vae,
                                epochs=self.epochs_vae, verbose=0, callbacks=[callbackvae(), self.checkpoint_vae])
-        os.makedirs(self.path + "/history/", exist_ok=True)
+        #os.makedirs(self.path + "/history/", exist_ok=True)
         np.save(os.path.join(self.path + "/history/", "history" + "vae" + str(self.latent_dims)), history.history)
         #np.save(os.path.join("/history/", "history" + "vae" + str(self.latent_dims)), history.history)
 
