@@ -1,3 +1,4 @@
+#from tensorflow import keras
 from tensorflow import keras
 from keras.layers import Dense, Reshape, Conv2DTranspose, BatchNormalization
 import tensorflow as tf

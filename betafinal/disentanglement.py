@@ -22,19 +22,21 @@ class disentanglement:
                                                              epsilon=1e-08)
         self.batch_size_vae = 64
         self.epochs_vae = math.ceil(self.data.x_train.shape[0] / self.batch_size_vae)
-        self.path = os.path.dirname(__file__) #ta bort om kluster, verkar inte gå med os.path
+        #self.path = os.path.dirname(__file__) #ta bort om kluster, verkar inte gå med os.path
         self.path = "Midgard/home/joadahl/thesis/betafinal"
         #self.beta_score_classifier = beta_score_classifier()
         self.checkpoint_vae = tf.keras.callbacks.ModelCheckpoint(
         os.path.join(self.path + "/modelstore/", "vae" + str(self.latent_dims)),
         monitor="val_loss",
         verbose=0,
-        save_best_only=False,
+        save_best_only=True,
         save_weights_only=True,
         mode="min",
         save_freq="epoch")
 
     def train_vae(self):
+        #log_dir = "logs/fit/"
+        #tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
         self.vae.compile(optimizer=self.optimizer_vae)
         history = self.vae.fit(self.data.x_train, self.data.x_train, validation_data=(self.data.x_test, self.data.x_test),
                                batch_size=self.batch_size_vae,
@@ -74,7 +76,7 @@ class disentanglement:
             f.write("beta_score:" + str(tot_score))
 
 
-print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
-dis = disentanglement(10, 4)
+#print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+dis = disentanglement(4, 4)
 dis.train_vae()
-dis.beta_score(10, 10)
+dis.beta_score(5000, 10)

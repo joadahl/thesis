@@ -14,7 +14,7 @@ class dsprite:
         y = data['latents_classes']
         x = x.reshape((x.shape[0], 64, 64, 1))
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
-        return x, y, x_train[0:150], x_test[0:150], y_train[0:150], y_test[0:150]
+        return x, y, x_train, x_test, y_train, y_test
 
 
     def batch_generation(self, L):  #borde ta ett helt dsprite objekt
