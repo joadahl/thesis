@@ -22,8 +22,8 @@ class disentanglement:
                                                              epsilon=1e-08)
         self.batch_size_vae = 64
         self.epochs_vae = math.ceil(self.data.x_train.shape[0] / self.batch_size_vae)
-        #self.path = os.path.dirname(__file__) #ta bort om kluster, verkar inte gå med os.path
-        self.path = "Midgard/home/joadahl/thesis/betafinal"
+        self.path = os.path.dirname(__file__) #ta bort om kluster, verkar inte gå med os.path
+        #self.path = "Midgard/home/joadahl/thesis/betafinal"
         #self.beta_score_classifier = beta_score_classifier()
         self.checkpoint_vae = tf.keras.callbacks.ModelCheckpoint(
         os.path.join(self.path + "/modelstore/", "vae" + str(self.latent_dims)),
@@ -41,9 +41,9 @@ class disentanglement:
         history = self.vae.fit(self.data.x_train, self.data.x_train, validation_data=(self.data.x_test, self.data.x_test),
                                batch_size=self.batch_size_vae,
                                epochs=self.epochs_vae, verbose=0, callbacks=[callbackvae(), self.checkpoint_vae])
-        #os.makedirs(self.path + "/history/", exist_ok=True)
-        #np.save(os.path.join(self.path + "/history/", "history" + "vae" + str(self.latent_dims)), history.history)
-        np.save(os.path.join("/history/", "history" + "vae" + str(self.latent_dims)), history.history)
+        os.makedirs(self.path + "/history/", exist_ok=True)
+        np.save(os.path.join(self.path + "/history/", "history" + "vae" + str(self.latent_dims)), history.history)
+        #np.save(os.path.join("/history/", "history" + "vae" + str(self.latent_dims)), history.history)
 
 
     def beta_score(self, amount_n, L):
@@ -81,4 +81,4 @@ class disentanglement:
 #print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 dis = disentanglement(4, 4)
 dis.train_vae()
-dis.beta_score(5000, 10)
+dis.beta_score(10, 10)
